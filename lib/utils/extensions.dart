@@ -19,6 +19,9 @@ extension IntExtensions on double {
     return this / fontSize;
   }
 }
+extension AnimationExtensions on Widget{
+
+}
 extension PaddingExtensions on Widget {
   Widget paddingAll(double padding) => Padding(
     padding: EdgeInsets.all(

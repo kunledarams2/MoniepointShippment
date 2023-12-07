@@ -24,7 +24,11 @@ class ShipmentViewModel extends ChangeNotifier {
     _selectedDashBoardTab = dashBoardTabModel;
     notifyListeners();
   }
-
+  double buttonScale=1.0;
+  void setButtonScale(double value){
+    buttonScale=value;
+    notifyListeners();
+  }
   ShipmentHistoryTabModel _selectedShipmentTab=const ShipmentHistoryTabModel(tabName: "All");
   ShipmentHistoryTabModel get selectedShipmentTab => _selectedShipmentTab;
   set selectedShipmentTab(ShipmentHistoryTabModel selectedShipmentTab) {

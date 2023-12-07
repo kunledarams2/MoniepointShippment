@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -22,6 +24,20 @@ class CalculatorScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     final useShipmentViewModel = ref.watch(shipmentVMProvider);
+    final controller = useAnimationController(
+      duration: Duration(milliseconds: 200),
+    );
+    final scaleAnimation = Tween<double>(begin: 1.0, end: 0.9).animate(controller);
+    void onTapDown(TapDownDetails details) {
+      controller.forward();
+    }
+    void onTapUp(TapUpDetails details) {
+      controller.reverse();
+    }
+    void onTapCancel() {
+      controller.reverse();
+      locator<AppRouter>().navigate(const CalculateSuccessScreen());
+    }
     return CustomScrollView(
       slivers: [
         SliverPersistentHeader(
@@ -55,7 +71,13 @@ class CalculatorScreen extends HookConsumerWidget {
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
                         height: 19.36.toLineHeight(16.sp),
-                      ),prefixIcon: SvgPicture.asset("ic_square_arrow_sender".svg).paddingAll(10),
+                      ),
+                      textStyle:CustomStyle.textStyleInter.copyWith(
+                        color: CustomColors.blackColor,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      prefixIcon: SvgPicture.asset("ic_square_arrow_sender".svg).paddingAll(10),
                       suffixIcon: SizedBox.shrink(),
                       fillColor: CustomColors.lightGrey,
                       border:OutlineInputBorder(
@@ -90,6 +112,11 @@ class CalculatorScreen extends HookConsumerWidget {
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
                         height: 19.36.toLineHeight(16.sp),
+                      ),
+                      textStyle:CustomStyle.textStyleInter.copyWith(
+                        color: CustomColors.blackColor,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
                       ),prefixIcon: SvgPicture.asset("ic_square_arrow_receiver".svg).paddingAll(10),
                       suffixIcon: SizedBox.shrink(),
                       fillColor: CustomColors.lightGrey,
@@ -125,6 +152,11 @@ class CalculatorScreen extends HookConsumerWidget {
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
                         height: 19.36.toLineHeight(16.sp),
+                      ),
+                      textStyle:CustomStyle.textStyleInter.copyWith(
+                        color: CustomColors.blackColor,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
                       ),prefixIcon: SvgPicture.asset("ic_height_meter".svg).paddingAll(10),
                       suffixIcon: SizedBox.shrink(),
                       fillColor: CustomColors.lightGrey,
@@ -206,7 +238,6 @@ class CalculatorScreen extends HookConsumerWidget {
                       Expanded(
                         child: Text(
                           "Box",
-                          textAlign: TextAlign.center,
                           style: CustomStyle.textStyleInter.copyWith(
                             color: CustomColors.blackColor,
                             fontSize: 16.sp,
@@ -222,27 +253,45 @@ class CalculatorScreen extends HookConsumerWidget {
                     ],
                   ),
                 ),
-                YMargin(24.h),
-                Text(
-                  "Categories",
-                  style: CustomStyle.textStyleInter.copyWith(
-                    color: CustomColors.blackColor,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w600,
-                    height: 24.2.toLineHeight(20.sp),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    YMargin(24.h),
+                    Text(
+                      "Categories",
+                      style: CustomStyle.textStyleInter.copyWith(
+                        color: CustomColors.blackColor,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w600,
+                        height: 24.2.toLineHeight(20.sp),
+                      ),
+                    ),
+                    YMargin(8.h),
+                    Text(
+                      "What are you sending?",
+                      style: CustomStyle.textStyleInter.copyWith(
+                        color: CustomColors.gray500,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        height: 19.36.toLineHeight(16.sp),
+                      ),
+                    ),
+                    YMargin(16.h),
+                  ],
+                ).animate(effects: [
+                  const SlideEffect(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeIn,
+                      begin: Offset(0, 0.5),
+                      delay: Duration(milliseconds: 300),
+                      end: Offset(0, 0)
                   ),
-                ),
-                YMargin(8.h),
-                Text(
-                  "What are you sending?",
-                  style: CustomStyle.textStyleInter.copyWith(
-                    color: CustomColors.gray500,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w500,
-                    height: 19.36.toLineHeight(16.sp),
-                  ),
-                ),
-                YMargin(16.h),
+                  FadeEffect(
+                    duration: Duration(milliseconds: 300),
+                    delay: Duration(milliseconds: 300),
+                    curve: Curves.easeIn,
+                  )]),
                 Wrap(
                   direction: Axis.horizontal,
                   runSpacing: 10,
@@ -254,11 +303,30 @@ class CalculatorScreen extends HookConsumerWidget {
                         calculatorCategoryModel: e,
                         onTap: (model) {
                           useShipmentViewModel.selectedCalculatorCategory=model;
-                        },))).toList(),
+                        },).animate(effects: [
+                        const SlideEffect(
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.easeIn,
+                            begin: Offset(0.5, 0),
+                            end: Offset(0, 0)
+                        ),
+                        FadeEffect(
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.easeIn,
+                        )
+                      ]))).toList(),
                 ).paddingOnly(bottom: 40.h),
-               CustomButton(onTap: (){
-                  locator<AppRouter>().navigate(const CalculateSuccessScreen());
-               },).paddingOnly(bottom: 32.h)
+               GestureDetector(
+                   onTapDown: onTapDown,
+                   onTapUp: onTapUp,
+                   onTapCancel: onTapCancel,
+                   child: AnimatedBuilder(
+                       animation: scaleAnimation, builder: (BuildContext context, Widget? child) {
+                     return Transform.scale(
+                       scale: scaleAnimation.value,
+                       child: CustomButton().paddingOnly(bottom: 32.h),
+                     );
+                   },))
               ]
           )),
         )

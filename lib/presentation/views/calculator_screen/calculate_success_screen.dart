@@ -1,6 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,6 +22,29 @@ class CalculateSuccessScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     final useShipmentViewModel = ref.watch(shipmentVMProvider);
+    final controller = useAnimationController(
+      duration: Duration(milliseconds: 200),
+    );
+    final scaleAnimation = Tween<double>(begin: 1.0, end: 0.9).animate(controller);
+    final moneyAnimationController = useAnimationController(
+      duration: const Duration(seconds: 2),
+    );
+    final animation = IntTween(begin: 0, end: 1441).animate(moneyAnimationController);
+    useEffect(() {
+      moneyAnimationController.forward();
+      return null;
+    }, const []);
+    void onTapDown(TapDownDetails details) {
+      controller.forward();
+    }
+    void onTapUp(TapUpDetails details) {
+      controller.reverse();
+    }
+    void onTapCancel() {
+      controller.reverse();
+      useShipmentViewModel.selectedDashBoardTab=useShipmentViewModel.dashBoardTabsData[0];
+      locator<AppRouter>().back();
+    }
     return BaseScaffold(
       includeHorizontalPadding: false,
       backgroundColor:CustomColors.gray900,
@@ -48,8 +73,15 @@ class CalculateSuccessScreen extends HookConsumerWidget {
                       ],
                     ),
                   YMargin(56.21.h),
-                  SvgPicture.asset("ic_movemate_box".svg),
-                  YMargin(32.h),
+                  SvgPicture.asset("ic_movemate_box".svg).animate(effects: [
+                    ScaleEffect(
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.easeIn,
+                      begin: Offset(0.3,0.3),
+                      end: Offset(1,1)
+                    )
+                  ]),
+                  YMargin(10.h),
                   Text(
                     "Total Estimated Amount",
                     style: CustomStyle.textStyleInter.copyWith(
@@ -58,28 +90,46 @@ class CalculateSuccessScreen extends HookConsumerWidget {
                         fontWeight: FontWeight.w500,
                         height: 31.47.toLineHeight(16.sp)
                     ),
-                  ),
+                  ).animate(effects: [
+                    const SlideEffect(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeIn,
+                        begin: Offset(0, 0.5),
+                        delay: Duration(milliseconds: 300),
+                        end: Offset(0, 0)
+                    ),
+                    FadeEffect(
+                      duration: Duration(milliseconds: 300),
+                      delay: Duration(milliseconds: 300),
+                      curve: Curves.easeIn,
+                    )]),
                   YMargin(16.h),
-                  RichText(
-                    text: TextSpan(
-                      text: "\$1441",
-                      style: CustomStyle.textStyleInter.copyWith(
-                          color: CustomColors.greenColor69,
-                          fontSize: 28.sp,
-                          fontWeight: FontWeight.w600,
-                          height: 33.89.toLineHeight(16.sp)
-                      ),
-                      children: [
-                          TextSpan(
-                            text: 'USD',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      AnimatedBuilder(
+                        animation: animation,
+                        builder: (context, child) {
+                          return Text(
+                            '\$${animation.value}',
                             style: CustomStyle.textStyleInter.copyWith(
                                 color: CustomColors.greenColor69,
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 28.sp,
+                                fontWeight: FontWeight.w600,
                             ),
-                          ),
-                      ],
-                    ),
+                          );
+                        },
+                      ),
+                      Text(
+                        'USD',
+                        style: CustomStyle.textStyleInter.copyWith(
+                          color: CustomColors.greenColor69,
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      )
+                    ],
                   ),
                   YMargin(16.h),
                   Text(
@@ -93,10 +143,19 @@ class CalculateSuccessScreen extends HookConsumerWidget {
                     textAlign: TextAlign.center,
                   ),
                   YMargin(32.h),
-                  CustomButton(buttonLabel: "Back to home", onTap: (){
-                      useShipmentViewModel.selectedDashBoardTab=useShipmentViewModel.dashBoardTabsData[0];
-                      locator<AppRouter>().back();
-                  },)
+                  GestureDetector(
+                      onTapDown: onTapDown,
+                      onTapUp: onTapUp,
+                      onTapCancel: onTapCancel,
+                      child: AnimatedBuilder(
+                        animation: scaleAnimation, builder: (BuildContext context, Widget? child) {
+                        return Transform.scale(
+                          scale: scaleAnimation.value,
+                          child: const CustomButton(
+                            buttonLabel: "Back to home",
+                          ).paddingOnly(bottom: 32.h),
+                        );
+                      },))
                 ],
               ),
             ),

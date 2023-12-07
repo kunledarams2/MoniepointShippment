@@ -21,17 +21,19 @@ class CustomTextField extends StatelessWidget {
   this.contentPadding,
   this.hintStyle,
   this.labelStyle,
-  this.border});
+  this.border,
+  this.textStyle});
   final Color? fillColor;
   final bool? isFilled;
   final Widget?suffixIcon,prefixIcon;
   final InputBorder?focusedErrorBorder,focusedBorder,disabledBorder,enabledBorder,border;
   final EdgeInsetsGeometry? contentPadding;
   final String? labelText,hintText;
-  final TextStyle? hintStyle,labelStyle;
+  final TextStyle? hintStyle,labelStyle,textStyle;
   @override
   Widget build(BuildContext context) {
     return  TextField(
+      style:textStyle,
       decoration: InputDecoration(
         fillColor: fillColor??CustomColors.whiteColor,
         filled: isFilled??true,
@@ -74,12 +76,14 @@ class CustomTextField extends StatelessWidget {
         floatingLabelBehavior: FloatingLabelBehavior.never,
         labelText: labelText??"Enter the receipt number...",
         hintText: hintText??"",
+
         hintStyle: hintStyle??CustomStyle.textStyleInter.copyWith(
           fontSize: 16.sp,
           color: CustomColors.gray500,
           fontWeight: FontWeight.w500,
           height: 19.36.toLineHeight(16.sp),
         ),
+
         labelStyle: labelStyle??TextStyle(
           fontSize: 16.sp,
           color: CustomColors.gray500,

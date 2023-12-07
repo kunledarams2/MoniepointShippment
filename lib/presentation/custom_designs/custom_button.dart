@@ -6,7 +6,7 @@ import '../styles/__export__.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({super.key,
-    required this.onTap,
+    this.onTap,
   this.height, this.width,
   this.bgColor,
   this.buttonStyle,
@@ -16,12 +16,12 @@ final double? height,width,borderRadius;
 final Color? bgColor;
 final TextStyle? buttonStyle;
 final String? buttonLabel;
-final Function onTap;
+final Function? onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        onTap();
+        onTap?.call();
       },
       child: Container(
         width: width??1.sw,
