@@ -38,9 +38,8 @@ class VehiclesCard extends StatelessWidget {
             freightLabel,
             style: CustomStyle.textStyleInter.copyWith(
                 color: CustomColors.blackColor,
-                fontSize: 18.sp,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
-                height: 21.78.toLineHeight(18.sp)
             ),
           ).paddingOnly(top: 16.h,left: 16.w,right: 18.w,
           bottom: 8.h),

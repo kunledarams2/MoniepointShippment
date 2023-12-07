@@ -4,6 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 extension StringExtensions on String {
   String get svg => "assets/svg/$this.svg";
   String get png => "assets/images/$this.png";
+  String get capitalizeEveryFirstLetter {
+    return split(" ").map((word) {
+      if (word.isNotEmpty) {
+        return word[0].toUpperCase() + word.substring(1);
+      } else {
+        return word;
+      }
+    }).join(" ");
+  }
 }
 extension IntExtensions on double {
   double toLineHeight(double fontSize) {

@@ -76,7 +76,7 @@ class HomeScreen extends HookConsumerWidget {
                 child: ListView.builder(itemBuilder: (context,index){
                   return VehiclesCard(transportWidget:Image.asset(useShipmentViewModel.transportVehicles[index]["asset"].toString().png),
                     freightLabel:useShipmentViewModel.transportVehicles[index]["asset"].toString().
-                    replaceFirst("ic_", "").replaceAll("_", ""),
+                    replaceFirst("ic_", "").replaceAll("_", " ").capitalizeEveryFirstLetter,
                     freightDescription:useShipmentViewModel.transportVehicles[index]["freight"],).animate(effects: [
                     const SlideEffect(
                         duration: Duration(milliseconds: 500),
