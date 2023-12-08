@@ -5,12 +5,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moniepoin_shipment/presentation/custom_designs/custom_margins.dart';
 import 'package:moniepoin_shipment/utils/extensions.dart';
 import '../../../styles/__export__.dart';
+import '../../../view_model/__export__.dart';
 
 class ShipmentHistoryItemCard extends HookConsumerWidget {
   const ShipmentHistoryItemCard({super.key});
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+    final useShipmentViewModel = ref.watch(shipmentVMProvider);
     return Container(
       width: 1.sw,
       margin: EdgeInsets.only(bottom: 16.h),
@@ -45,7 +47,7 @@ class ShipmentHistoryItemCard extends HookConsumerWidget {
                     SvgPicture.asset("ic_refresh".svg),
                   XMargin(2.w),
                   Text(
-                   'in-progress',
+                    useShipmentViewModel.selectedShipmentTab.tabName.toLowerCase()!="all"?useShipmentViewModel.selectedShipmentTab.tabName:'in-progress',
                     style: CustomStyle.textStyleInter.copyWith(
                       color: CustomColors.greenColor69,
                       fontSize: 13.sp,
