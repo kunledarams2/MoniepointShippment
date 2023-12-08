@@ -12,8 +12,9 @@ import '../../../styles/__export__.dart';
 import '../../../view_model/__export__.dart';
 
 class SearchHeader extends HookConsumerWidget {
-  const SearchHeader({super.key});
-
+  const SearchHeader({super.key,
+  this.onChange});
+  final Function(String)? onChange;
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     final useShipmentViewModel = ref.watch(shipmentVMProvider);
@@ -44,7 +45,11 @@ class SearchHeader extends HookConsumerWidget {
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap, // the '2023' part
                   ),),
                 XMargin(12.w),
-                Expanded(child: CustomTextField(labelText: "#NEJ200899|",)),
+                Expanded(child: CustomTextField(labelText: "Search",onChange:onChange,textStyle:CustomStyle.textStyleInter.copyWith(
+                  color: CustomColors.blackColor,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                ))),
                 XMargin(16.w)
               ],
             ),

@@ -22,7 +22,8 @@ class CustomTextField extends StatelessWidget {
   this.hintStyle,
   this.labelStyle,
   this.border,
-  this.textStyle});
+  this.textStyle,
+  this.onChange});
   final Color? fillColor;
   final bool? isFilled;
   final Widget?suffixIcon,prefixIcon;
@@ -30,10 +31,12 @@ class CustomTextField extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final String? labelText,hintText;
   final TextStyle? hintStyle,labelStyle,textStyle;
+  final Function(String)? onChange;
   @override
   Widget build(BuildContext context) {
     return  TextField(
       style:textStyle,
+      onChanged: onChange,
       decoration: InputDecoration(
         fillColor: fillColor??CustomColors.whiteColor,
         filled: isFilled??true,

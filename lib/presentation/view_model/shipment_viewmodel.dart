@@ -5,6 +5,7 @@ import 'package:moniepoin_shipment/models/shipment_tab_data_model/shipment_histo
 import 'package:moniepoin_shipment/presentation/views/shipment_history/__export__.dart';
 
 import '../../models/dashboard_tab_data_model/__export__.dart';
+import '../../models/search_shipment_item_model/search_shipment_item_model.dart';
 import '../../utils/locator.dart';
 import '../routes/__export__.dart';
 import '../views/calculator_screen/calculator_screen.dart';
@@ -61,7 +62,36 @@ class ShipmentViewModel extends ChangeNotifier {
     "freight":"Live"},{"asset":"ic_road_freight",
     "freight":"Local"},{"asset":"ic_instant_freight",
     "freight":"Instant"}];
-
+  List<SearchShipmentItemModel>searchHistoryItems=[
+    const SearchShipmentItemModel(itemDescription: '#NEJ20089934122231 • Barcelona → Paris',
+        itemName: 'Summer linen jacket'),
+    const SearchShipmentItemModel(itemDescription: '#DGHJ2488383939393 • Barcelona → London',
+        itemName: 'Summer linen Shirt'),
+    const SearchShipmentItemModel(itemDescription: '#NEJ20089934122231 • Barcelona → Paris',
+        itemName: 'Winter linen jacket'),
+    const SearchShipmentItemModel(itemDescription: '#DGHJ2488383939393 • Barcelona → London',
+        itemName: 'Summer linen Shirt'),
+    const SearchShipmentItemModel(itemDescription: '#NEJ20089934122231 • United Kingdom → Paris',
+        itemName: 'Autumn linen jacket'),
+    const SearchShipmentItemModel(itemDescription: '#DGHJ2488383939393 • Barcelona → London',
+        itemName: 'Winter linen Shirt'),
+    const SearchShipmentItemModel(itemDescription: '#NEJ20089934122231 • Paris → Barcelona',
+        itemName: 'Autumn linen jacket'),
+    const SearchShipmentItemModel(itemDescription: '#DGHJ2488383939393 • Barcelona → London',
+        itemName: 'Summer linen Shirt'),
+    const SearchShipmentItemModel(itemDescription: '#DGHJ2488383939393 • Barcelona → London',
+        itemName: 'Winter linen Shirt'),
+    const SearchShipmentItemModel(itemDescription: '#NEJ20089934122231 • Paris → Barcelona',
+        itemName: 'Autumn linen jacket'),
+    const SearchShipmentItemModel(itemDescription: '#DGHJ2488383939393 • Barcelona → London',
+        itemName: 'Summer linen Shirt'),
+    const SearchShipmentItemModel(itemDescription: '#NEJ20089934122231 • Barcelona → Paris',
+        itemName: 'Summer linen jacket'),
+    const SearchShipmentItemModel(itemDescription: '#DGHJ2488383939393 • Barcelona → London',
+        itemName: 'Summer linen Shirt'),
+    const SearchShipmentItemModel(itemDescription: '#NEJ20089934122231 • Barcelona → Paris',
+        itemName: 'Winter linen jacket'),
+  ];
   List<ShipmentHistoryTabModel>shipmentHistoryTabData=const[
     ShipmentHistoryTabModel(tabName: "All"),
     ShipmentHistoryTabModel(tabName: "Completed"),

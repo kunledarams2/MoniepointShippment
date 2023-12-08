@@ -7,8 +7,9 @@ import 'package:moniepoin_shipment/utils/extensions.dart';
 import '../../../styles/__export__.dart';
 
 class SearchItemCard extends StatelessWidget {
-  const SearchItemCard({super.key});
-
+  const SearchItemCard({super.key,
+  required this.label,required this.description});
+  final String label,description;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +44,7 @@ class SearchItemCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Summer linen jacket",
+                 label,
                   style: CustomStyle.textStyleInter.copyWith(
                       color: CustomColors.blackColor,
                       fontSize: 16.sp,
@@ -53,7 +54,7 @@ class SearchItemCard extends StatelessWidget {
                 ),
                 YMargin(4.h),
                 Text(
-                  "#NEJ20089934122231 • Barcelona → Paris",
+                  description,
                   style: CustomStyle.textStyleInter.copyWith(
                       color: CustomColors.gray500,
                       fontSize: 13.sp,
