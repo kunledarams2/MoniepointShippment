@@ -85,7 +85,8 @@ class SearchShipmentScreen extends HookConsumerWidget {
                           position: Tween<Offset>(
                             begin: Offset(0.0, isSearching.value ? 1.0 : 0.0),
                             end: Offset(0.0, 0.0),
-                          ).animate(controller),
+                          ).
+                          animate(controller),
                           child: FadeTransition(
                             opacity: Tween<double>(begin: isSearching.value
                                 ?0.0:1.0, end: 1.0).animate(controller),
@@ -95,7 +96,17 @@ class SearchShipmentScreen extends HookConsumerWidget {
                         );
                       },itemCount:listHolder.value!.length,padding: EdgeInsets.all(0),shrinkWrap: true,),
                     ).paddingSymmetric(horizontal: 16.w),
-                  )
+                  ).animate(effects: [
+                    FadeEffect(
+                        duration: 1500.ms
+                    ),
+                    const SlideEffect(
+                      duration: Duration(
+                          milliseconds: 1000),
+                      curve: Curves.easeIn,
+                      begin: Offset(0, 0.5),
+                      end: Offset(0, 0),),
+                  ]),
                 ]else ...[
                   SizedBox.shrink()
                 ]

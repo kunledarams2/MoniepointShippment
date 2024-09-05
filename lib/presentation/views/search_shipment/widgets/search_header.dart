@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -34,6 +35,7 @@ class SearchHeader extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                XMargin(16.w),
                 IconButton(onPressed: (){
                   useShipmentViewModel.selectedDashBoardTab=useShipmentViewModel.dashBoardTabsData[0];
                   locator<AppRouter>().back();
@@ -53,7 +55,17 @@ class SearchHeader extends HookConsumerWidget {
                 XMargin(16.w)
               ],
             ),
-          ),
+          ).animate(effects: [
+            FadeEffect(
+                duration: 1000.ms
+            ),
+            const SlideEffect(
+              duration: Duration(
+                  milliseconds: 1000),
+              curve: Curves.easeIn,
+              begin: Offset(0, 0.5),
+              end: Offset(0, 0),),
+          ]),
         ],
       ),
     ),);

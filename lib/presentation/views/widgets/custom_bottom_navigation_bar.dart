@@ -14,9 +14,9 @@ class CustomBottomNavigationBar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final useShipmentViewModel = ref.watch(shipmentVMProvider);
-    return Container(
+    return useShipmentViewModel.selectedDashBoardTab.tabName!="Calculate"?  Container(
       width: 1.sw,
-      height: 99.h,
+      height: 70.h,
       decoration: BoxDecoration(color: CustomColors.whiteColor, boxShadow: [
         BoxShadow(
             color: CustomColors.blackColor.withOpacity(0.1),
@@ -26,14 +26,17 @@ class CustomBottomNavigationBar extends HookConsumerWidget {
       child: ListView.builder(itemBuilder: (context,index){
         return CustomNavigationBarItem(isSelected: useShipmentViewModel.selectedDashBoardTab.tabName==useShipmentViewModel.dashBoardTabsData[index].tabName,
             dashBoardTabModel:useShipmentViewModel.dashBoardTabsData[index],
-            onTap: (tabData){
+            onTap: (tabData) async {
+          if (useShipmentViewModel.dashBoardTabsData[index].tabName =="Shipment"){
+            await useShipmentViewModel.readShippingHistoryJson();
+          }
               useShipmentViewModel.selectedDashBoardTab=tabData;
             });
       },
       itemCount: useShipmentViewModel.dashBoardTabsData.length,
       padding: const EdgeInsets.all(0),
       scrollDirection: Axis.horizontal,),
-    );
+    ):SizedBox.shrink();
   }
 }
 
@@ -61,22 +64,23 @@ class CustomNavigationBarItem extends HookConsumerWidget {
                 top: BorderSide(
                     color:
                         isSelected ? CustomColors.darkPurple : Colors.transparent,
-                    width: 4.h))),
+                    width: 2.h))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SvgPicture.asset(
               dashBoardTabModel.iconUrl.svg,
+              height: 20.h,
               colorFilter: ColorFilter.mode(
                   isSelected ? CustomColors.darkPurple : CustomColors.gray500,
                   BlendMode.srcIn),
-            ).paddingOnly(bottom: 11.h),
+            ).paddingOnly(bottom: 1.h),
             Text(
               dashBoardTabModel.tabName,
               style: CustomStyle.textStyleInter.copyWith(
                   color: isSelected?CustomColors.darkPurple:CustomColors.gray500,
-                  fontSize: 18.sp,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
                   height: 21.78.toLineHeight(18.sp)),
             )

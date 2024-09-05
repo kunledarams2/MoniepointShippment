@@ -7,7 +7,9 @@ import 'package:moniepoin_shipment/utils/locator.dart';
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
-  Animate.restartOnHotReload = true;
+   Animate.restartOnHotReload = true;
+
+  await Future.delayed(Duration(seconds: 5));
   runApp(const ProviderScope(child:MyApp()));
 }
 

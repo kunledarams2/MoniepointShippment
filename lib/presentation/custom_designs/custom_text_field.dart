@@ -50,7 +50,7 @@ class CustomTextField extends StatelessWidget {
                 shape: BoxShape.circle
             ),
             child: SvgPicture.asset("ic_scan".svg,width: 24.w,height: 24.h,fit: BoxFit.fill,)),
-        prefixIcon: prefixIcon??SvgPicture.asset("ic_search".svg).paddingAll(12),
+        prefixIcon: prefixIcon??SvgPicture.asset("ic_search".svg, ).paddingAll(14),
         focusedErrorBorder: focusedErrorBorder??OutlineInputBorder(
             borderRadius: BorderRadius.circular(25.r),
             borderSide: BorderSide(

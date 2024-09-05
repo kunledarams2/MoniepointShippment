@@ -15,17 +15,32 @@ class DashBoardScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor:  CustomColors.darkBlue100, // Set your desired color
+      statusBarIconBrightness: Brightness.light, // For white icons on a dark background
+    ));
     final useShipmentViewModel = ref.watch(shipmentVMProvider);
+
     return BaseScaffold(
       includeHorizontalPadding: false,
       backgroundColor:CustomColors.gray900,
       childHasCustomHeader: false,
+
       safeTop: false,
       onWillPop: () {},
       bottomNavBar: const CustomBottomNavigationBar(),
       builder: (size) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
+          value: const SystemUiOverlayStyle(
+            statusBarColor:CustomColors.deepPurple,
+            statusBarIconBrightness: Brightness.light,
+            statusBarBrightness: Brightness.light,
+            systemNavigationBarColor: Colors.transparent,
+            systemNavigationBarIconBrightness: Brightness.dark,
+
+            // systemNavigationBarContrastEnforced: false,
+            // systemStatusBarContrastEnforced: false,
+          ),
           child: SizedBox(
             width: 1.sw,
             height: 1.sw,

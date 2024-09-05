@@ -25,9 +25,14 @@ class VehiclesCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
                 color: CustomColors.blackColor.withOpacity(0.1),
-                blurRadius: 2,
-                offset: const Offset(0,2)
+                blurRadius: 10,
+                offset: const Offset(0,3)
             )
+            // BoxShadow(
+            //     color: CustomColors.blackColor.withOpacity(0.1),
+            //     blurRadius: 2,
+            //     offset: const Offset(0,2)
+            // )
           ]
       ),
       child: Column(

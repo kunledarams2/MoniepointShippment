@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,7 +15,9 @@ class CalculatorScreenHeader extends HookConsumerWidget {
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     final useShipmentViewModel = ref.watch(shipmentVMProvider);
-    return SafeArea(top: false,child:
+
+    return SafeArea(
+      top: false,child:
     Container(
       width: 1.sw,
       height: 110.h,
@@ -34,18 +37,22 @@ class CalculatorScreenHeader extends HookConsumerWidget {
                  useShipmentViewModel.navigateBack();
                 },
                   child: SvgPicture.asset("ic_arrow_left".svg)),
-              Expanded(
-                child: Text(
-                  "Calculate",
-                  textAlign: TextAlign.center,
-                  style: CustomStyle.textStyleInter.copyWith(
-                    color: CustomColors.whiteColor,
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                    height: 21.78.toLineHeight(18.sp),
-                  ),
+              Spacer(),
+              Text(
+                "Calculate",
+                textAlign: TextAlign.center,
+                style: CustomStyle.textStyleInter.copyWith(
+                  color: CustomColors.whiteColor,
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w600,
+                  height: 21.78.toLineHeight(18.sp),
                 ),
               ),
+              Spacer(),
+              XMargin(16.w),
+            /*  Expanded(
+                child:
+              ),*/
             ],
           )
         ],

@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,6 +24,7 @@ class HomeScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     final useShipmentViewModel = ref.watch(shipmentVMProvider);
+
     return CustomScrollView(
       slivers: [
        const HomeHeader(),
@@ -93,7 +95,12 @@ class HomeScreen extends HookConsumerWidget {
                   itemCount: useShipmentViewModel.transportVehicles.length,
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.all(0),),
-              ).paddingOnly(bottom: 24.h),
+              ).paddingOnly(bottom: 24.h).animate(effects: [const SlideEffect(duration: Duration(milliseconds: 500),
+
+                  curve: Curves.easeIn, begin: Offset(0, 0.3), end: Offset(0, 0)), FadeEffect(duration: Duration(milliseconds: 1000), curve: Curves.easeIn,)]),
+
+
+              // YMargin(16.h),
             ]
           ),
         ),

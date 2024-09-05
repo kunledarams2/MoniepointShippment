@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../styles/__export__.dart';
@@ -41,6 +42,8 @@ class BaseScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return LayoutBuilder(
       builder: (context, constraint) {
         Size constraints = Size(constraint.maxWidth, constraint.maxHeight);

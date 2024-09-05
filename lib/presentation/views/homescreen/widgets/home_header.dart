@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,7 +22,7 @@ class HomeHeader extends StatelessWidget {
             SafeArea(
               top: false,
               child: Container(
-                color: CustomColors.darkPurple,
+                color: CustomColors.deepPurple,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +83,7 @@ class HomeHeader extends StatelessWidget {
                               color: CustomColors.whiteColor),
                           child: Center(
                               child:
-                                  SvgPicture.asset("ic_notification_bell".svg)),
+                                  SvgPicture.asset("ic_notification_bell".svg, height: 20.h,)),
                         )
                       ],
                     ).paddingOnly(left: 16.w, right: 16.w, bottom: 22.h),
@@ -91,7 +92,8 @@ class HomeHeader extends StatelessWidget {
                         locator<AppRouter>().navigateNamed(Routes.searchShipmentScreenRoute);
                       },
                         child: const AbsorbPointer(child: CustomTextField())
-                            .paddingSymmetric(horizontal: 16.w))
+                            .paddingSymmetric(horizontal: 16.w)),
+
                   ],
                 ),
               ),
@@ -103,7 +105,10 @@ class HomeHeader extends StatelessWidget {
                   end: Offset(0, 0)),
             ]),
             190.h,
-            190.h));
+            195.h,
+
+        )
+    );
   }
 }
 

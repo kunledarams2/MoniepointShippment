@@ -15,12 +15,14 @@ import '../../custom_designs/base_scaffold.dart';
 import '../../routes/__export__.dart';
 import '../../styles/__export__.dart';
 import '../../view_model/__export__.dart';
+
 @RoutePage(name: 'CalculateSuccessScreen')
 class CalculateSuccessScreen extends HookConsumerWidget {
   const CalculateSuccessScreen({super.key});
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+
     final useShipmentViewModel = ref.watch(shipmentVMProvider);
     final controller = useAnimationController(
       duration: Duration(milliseconds: 200),
@@ -53,7 +55,16 @@ class CalculateSuccessScreen extends HookConsumerWidget {
       onWillPop: () {},
       builder: (size) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.dark,
+          value: const SystemUiOverlayStyle(
+            statusBarColor:CustomColors.gray900,
+            statusBarIconBrightness: Brightness.light,
+            statusBarBrightness: Brightness.light,
+            systemNavigationBarColor: CustomColors.gray900,
+            systemNavigationBarIconBrightness: Brightness.dark,
+
+            // systemNavigationBarContrastEnforced: false,
+            // systemStatusBarContrastEnforced: false,
+          ),
           child: SizedBox(
             width: 1.sw,
             height: 1.sw,
@@ -67,9 +78,9 @@ class CalculateSuccessScreen extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset("img_movemate".png),
+                        Image.asset("img_movemate".png, height: 120.h, width: 120.w,),
                         XMargin(6.w),
-                        SvgPicture.asset("ic_movemate_truck".svg)
+                        SvgPicture.asset("ic_movemate_truck".svg,height: 30.h, )
                       ],
                     ),
                   YMargin(56.21.h),
@@ -132,15 +143,20 @@ class CalculateSuccessScreen extends HookConsumerWidget {
                     ],
                   ),
                   YMargin(16.h),
-                  Text(
-                    "This amount is estimated, this will vary if you change your location or weight.",
-                    style: CustomStyle.textStyleInter.copyWith(
-                        color: CustomColors.gray500,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        height: 19.36.toLineHeight(16.sp)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      "This amount is estimated, this will vary if you change your location or weight.",
+
+                      style: CustomStyle.textStyleInter.copyWith(
+                          color: CustomColors.gray500,
+                          fontSize: 16.sp,
+
+                          fontWeight: FontWeight.w500,
+                          height: 19.36.toLineHeight(16.sp)
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                   YMargin(32.h),
                   GestureDetector(

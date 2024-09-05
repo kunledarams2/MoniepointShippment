@@ -1,0 +1,18 @@
+
+# flutter_native_splash-development.yaml
+flutter_native_splash:
+#  background_image: "assets/images/splash_screen_background.png"
+  image: assets/images/ic_moniepoint.png
+  color: "#FFFFFF"
+  #  branding: assets/images/lugah_launcher_icon.png  assets/images/bloc_loader.gif  assets/images/bloc_logo_v2.png
+  #  color_dark: "#B8500"
+  #  image_dark: assets/images/lugah_launcher_icon.png
+  #  branding_dark: assets/images/lugah_launcher_icon.png
+  android_12:
+    image: assets/images/ic_moniepoint.png
+    color: "#121212"
+#    icon_background_color: "#ffffff"
+#    image_dark: assets/logo-development.png  assets/images/bloc_logo_v2.png
+#    icon_background_color_dark: "#121212"
+#
+#  web: false

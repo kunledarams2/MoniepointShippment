@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moniepoin_shipment/presentation/custom_designs/custom_margins.dart';
 import 'package:moniepoin_shipment/utils/extensions.dart';
 import '../../../../models/shipment_tab_data_model/shipment_history_tab_data_model.dart';
+import '../../../../models/shipping_history_model.dart';
 import '../../../styles/__export__.dart';
 import '../../../view_model/__export__.dart';
 
@@ -16,6 +17,13 @@ class CustomTabBar extends HookConsumerWidget {
   Widget build(BuildContext context,WidgetRef ref) {
     var selectedTab = useState<int>(-1);
   final useShipmentViewModel = ref.watch(shipmentVMProvider);
+    var listHolder = useState<List<ShippingDatum>?>([]);
+
+    useEffect((){
+      listHolder.value=useShipmentViewModel.selectedShippingHistory!.data;
+      return null;
+    },[]);
+
     return SafeArea(
       top: false,
       child: Container(
@@ -35,28 +43,33 @@ class CustomTabBar extends HookConsumerWidget {
                     useShipmentViewModel.navigateBack();
                   },
                     child: SvgPicture.asset("ic_arrow_left".svg)),
-                Expanded(
-                  child: Text(
-                    'Shipment history',
-                    textAlign: TextAlign.center,
-                    style: CustomStyle.textStyleInter.copyWith(
-                        color: CustomColors.whiteColor,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w600,
-                        height: 21.78.toLineHeight(18.sp)
-                    ),
+                Spacer(),
+                Text(
+                  'Shipment history',
+                  textAlign: TextAlign.center,
+                  style: CustomStyle.textStyleInter.copyWith(
+                      color: CustomColors.whiteColor,
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      height: 21.78.toLineHeight(18.sp)
                   ),
-                )
+                ),
+                Spacer(),
+                // Expanded(
+                //   child:
+                // )
               ],
-            ).paddingOnly(top: 28.h,left: 16.w),
+            ).paddingOnly(top: 28.h,left: 16.w, right: 16.w),
             SizedBox(
               width: 1.sw,
               height:60.h,
               child: ListView.builder(itemBuilder: (context,index){
-                return Tab(isSelected: useShipmentViewModel.selectedShipmentTab.tabName==useShipmentViewModel.shipmentHistoryTabData[index].tabName,
+                return TabCu(isSelected: useShipmentViewModel.selectedShipmentTab.tabName==useShipmentViewModel.shipmentHistoryTabData[index].tabName,
                   shipmentTab: useShipmentViewModel.shipmentHistoryTabData[index], tabLabel:useShipmentViewModel.shipmentHistoryTabData[index].tabName,
-                  itemCount: ((index+1)*2).toString(), onTap: (tabModel) {
+                  itemCount:useShipmentViewModel.calculateTotalForStatus(useShipmentViewModel.selectedShippingHistory!.data,useShipmentViewModel.shipmentHistoryTabData[index].tabName ).toString() /*((index+1)*2).toString()*/,
+                  onTap: (tabModel) {
                     useShipmentViewModel.selectedShipmentTab=tabModel;
+                    listHolder.value = useShipmentViewModel.selectedShippingHistory!.data.where((e) =>e.status ==useShipmentViewModel.shipmentHistoryTabData[index].tabName ).toList();
                   },);
               },
                 physics: const BouncingScrollPhysics(),
@@ -70,13 +83,13 @@ class CustomTabBar extends HookConsumerWidget {
   }
 }
 
-class Tab extends StatelessWidget {
+class TabCu extends StatelessWidget {
   final bool isSelected;
   final String tabLabel;
   final String itemCount;
   final Function(ShipmentHistoryTabModel) onTap;
   final ShipmentHistoryTabModel shipmentTab;
-  const Tab({super.key, required this.isSelected, required this.tabLabel,
+  const TabCu({super.key, required this.isSelected, required this.tabLabel,
   required this.itemCount,
   required this.onTap,
   required this.shipmentTab});

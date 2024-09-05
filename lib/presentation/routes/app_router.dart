@@ -22,5 +22,10 @@ class AppRouter extends $AppRouter {
       page: CalculateSuccessScreen.page,
       path: Routes.calculateSuccessScreenRoute,
     ),
+
+    AutoRoute(
+      page: ShipmentTrackerScreen.page,
+      path: Routes.shipmentTrackerScreenRoute,
+    ),
   ];
 }
